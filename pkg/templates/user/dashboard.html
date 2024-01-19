@@ -1,0 +1,25 @@
+{% extends "user/home_layout.html" %}
+{% block customcss %} 
+style="background-color:white;"
+{% endblock customcss %}
+{% block content %}
+<div class="content">
+<h3>Welcome {{ deets.user_fname|title }}!</h3>
+{% set m =get_flashed_messages(with_categories=True)%}
+{% if m %}
+  {% for cat,msg in m %}
+    {% if cat =="error" %}
+      <div class='alert alert-danger noround'>{{ msg }}</div>
+     {% else %}
+      <div class='alert alert-info noround'>{{ msg }}</div>
+    {% endif%}
+  {% endfor %}
+{% endif %}
+
+  <p>This is your dashboard, please use the second-level menu to carry out tasks</p>
+ </div>
+{% endblock content %}
+
+{% block breakout %}{% endblock %}
+
+{% block conversation %}{% endblock %}

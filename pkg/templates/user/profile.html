@@ -1,0 +1,72 @@
+{% extends "user/home_layout.html" %}
+
+{% block content%}   
+<div class="content" style="background-color: white;padding:3em">
+    <h3>Edit Your Profile</h3>
+    <form enctype="multipart/form-data" method="post">
+    {# {{ deets }} #}
+    
+{% set m =get_flashed_messages(with_categories=True)%}
+{% if m %}
+  {% for cat,msg in m %}
+    {% if cat =="error" %}
+      <div class='alert alert-danger noround'>{{ msg }}</div>
+     {% else %}
+      <div class='alert alert-info noround'>{{ msg }}</div>
+    {% endif%}
+  {% endfor %}
+{% endif %}
+   <div class="form-group row">
+    <div class="col-md-6 mb-3">
+      <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+      <label for="fname">FirstName</label>
+        <input class="form-control border-dark noround" id="fname" name="fname" required type="text" value="{{ deets.user_fname}}" >
+    
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="lname">LastName</label>
+        <input class="form-control border-dark noround" value="{{ deets.user_lname}}" id="lname" name="lname" required type="text"  >
+    
+    </div>
+   </div>
+   <div class="form-group row">
+    <div class="col-md-6 mb-3">
+        <label for="phone">Phone</label>
+        <input class="form-control border-dark noround" value="{{ deets.user_phone}}" id="phone" name="phone" required type="text" >
+    
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="lname">Category </label> 
+        <select name="level" id="level" class="form-control border-dark noround">
+            <option value="">Select One</option>
+           {% for d in devs %}
+           {% if d.level_id == deets.user_levelid %}
+            <option value="{{ d.level_id }}" selected>{{ d.level_name }}</option>
+            {%else%}
+            <option value="{{ d.level_id }}">{{ d.level_name }}</option>
+            {% endif %}
+          {% endfor%}
+
+
+           </select>
+    
+    </div>
+
+   </div>
+   <hr>
+ 
+  
+    <div class="mb-3"> 
+      <input class="btn custom-btn noround" id="btnsubmit" name="btnsubmit" type="submit" value="Update Profile!">
+      
+    </div>
+   
+    </form>
+ </div>
+  </div>
+<!-- end more content-->
+{% endblock content %}
+
+{% block breakout %}{% endblock %}
+{% block conversation %}{% endblock %}
+{% block partner %}{% endblock %}

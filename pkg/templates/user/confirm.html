@@ -1,0 +1,45 @@
+{% extends "user/home_layout.html" %}
+{% block customcss %} 
+style="background-color:white;"
+{% endblock customcss %}
+{% block content %}
+<div class="content">
+<h3>Welcome {{ deets.user_fname|title }}!</h3>
+{% set m =get_flashed_messages(with_categories=True)%}
+{% if m %}
+  {% for cat,msg in m %}
+    {% if cat =="error" %}
+      <div class='alert alert-danger noround'>{{ msg }}</div>
+     {% else %}
+      <div class='alert alert-info noround'>{{ msg }}</div>
+    {% endif%}
+  {% endfor %}
+{% endif %}
+
+<h4><u>Payment Confirmation Page</u></h4>
+  <p>You are about to donate with the following details, please click on the Confirm button when you are done:</p>
+  <p>Please take note of the ref no, you will need to quote ity in any conversation with us as per this donation</p>
+  <table class='table table-responsive'>
+    <tr>
+      <td>Donation Amount</td>
+      <td>{{ donation_deets.donate_amt }}</td>
+    </tr>
+    <tr>
+      <td>Ref No</td>
+      <td><b>{{ donation_deets.donate_ref }}</b></td>
+    </tr>
+    <tr>
+      <td colspan='2'>
+        <form action="/topaystack" method='post'>
+          <input type="hidden" name="csrf_token" value="{{ csrf_token()}}">
+          <button class='btn btn-success col-12'>Confirm Donation</button>
+        </form>
+      </td>     
+    </tr>
+  </table>
+ </div>
+{% endblock content %}
+
+{% block breakout %}{% endblock %}
+
+{% block conversation %}{% endblock %}
